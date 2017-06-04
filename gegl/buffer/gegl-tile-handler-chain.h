@@ -38,7 +38,7 @@ struct _GeglTileHandlerChain
 {
   GeglTileHandler  parent_instance;
 
-  GSList      *chain;
+  GSList      *chain;                   // Chain of GeglTileHandler
 };
 
 struct _GeglTileHandlerChainClass

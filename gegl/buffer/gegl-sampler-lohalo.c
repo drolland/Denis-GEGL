@@ -290,8 +290,8 @@ enum
 };
 
 static void gegl_sampler_lohalo_get (      GeglSampler* restrict  self,
-                                     const gdouble                absolute_x,
-                                     const gdouble                absolute_y,
+                                           const gdouble                absolute_x,
+                                           const gdouble                absolute_y,
                                            GeglMatrix2           *scale,
                                            void*        restrict  output,
                                            GeglAbyssPolicy        repeat_mode);

@@ -22,6 +22,7 @@
 #include <string.h>
 #include <errno.h>
 #include <stdlib.h>
+#include "gegl-heavy-debug.h"
 
 #include <sys/types.h>
 #ifdef HAVE_UNISTD_H
@@ -972,6 +973,8 @@ GeglBuffer *
 gegl_buffer_new (const GeglRectangle *extent,
                  const Babl          *format)
 {
+  H_DBG_TRACE_BGEIN()
+  h_dbg_indent_print("p1 - GeglRectangle\n");
   GeglRectangle empty={0,0,0,0};
 
   if (extent == NULL)
@@ -980,6 +983,7 @@ gegl_buffer_new (const GeglRectangle *extent,
   if (format == NULL)
     format = gegl_babl_rgba_linear_float ();
 
+  H_DBG_TRACE_END();
   return g_object_new (GEGL_TYPE_BUFFER,
                        "x", extent->x,
                        "y", extent->y,

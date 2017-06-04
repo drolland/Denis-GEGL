@@ -14,22 +14,44 @@
 #ifndef GEGL_HEAVY_DEBUG_H
 #define GEGL_HEAVY_DEBUG_H
 
-#include <glib.h>
 
-G_BEGIN_DECLS
+#ifdef HEAVY_DEBUG
+
+#include <stdio.h>
+
+extern int _h_dbg_indent;
+
+#define h_dbg_print(...) printf(__VA_ARGS__)
+
+#define h_dbg_indent_print(...) do {          \
+for(int i = 0; i < _h_dbg_indent; i++)        \
+    h_dbg_print("  ");                             \
+    h_dbg_print("--- ");                           \
+    h_dbg_print(__VA_ARGS__);                      \
+} while ( 0 )
+
+#define H_DBG_TRACE_BGEIN() do {              \
+for(int i = 0; i < _h_dbg_indent; i++)        \
+    h_dbg_print("  ");                             \
+    h_dbg_print("|%s \n",__FUNCTION__);            \
+    _h_dbg_indent++ ;                         \
+} while ( 0 );
+
+#define H_DBG_TRACE_END() do {                \   
+    _h_dbg_indent--;                          \
+} while ( 0 );
         
-extern gint _gegl_hd_indent;
+#else
+    
+#define h_dbg_print(...) g_print(...)
+      
+#define h_dbg_indent_print(...) 
 
-void gegl_hd_init();
+#define H_DBG_TRACE_BGEIN() 
 
-
-#define GEGL_HD_TRACE() do {                    \
-for(int i = 0; i < _gegl_hd_indent; i++)        \
-    g_print(" ");                               \
-    g_print()                                            \
-        
-G_END_DECLS
-
-
+#define H_DBG_TRACE_END() 
+            
 #endif 
+    
+#endif
 

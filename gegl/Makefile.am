@@ -99,6 +99,7 @@ GEGL_sources = \
 	gegl-random.c			\
 	gegl-serialize.c		\
 	gegl-matrix.c			\
+	gegl-heavy-debug.c		\
 	\
 	gegl-algorithms.h \
 	gegl-config.h			\
@@ -112,12 +113,14 @@ GEGL_sources = \
 	gegl-lookup.h			\
 	gegl-matrix.h			\
 	gegl-module.h			\
-	gegl-op.h			    \
+	gegl-op.h			\
 	gegl-plugin.h			\
 	gegl-random-private.h		\
 	gegl-gio-private.h		\
 	gegl-types-internal.h		\
-	gegl-xml.h
+	gegl-xml.h			\
+	gegl-heavy-debug.h
+	
 
 EXTRA_DIST = gegl-algorithms-boxfilter.inc gegl-algorithms-2x2-downscale.inc gegl-algorithms-bilinear.inc
 

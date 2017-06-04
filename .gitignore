@@ -2,7 +2,8 @@
 *.rej
 *.sw?
 *~
-/.cdtproject
+nbproject
+/docs
 /.project
 /.tm_project.cache
 /ChangeLog

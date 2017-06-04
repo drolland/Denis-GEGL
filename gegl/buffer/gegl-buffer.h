@@ -688,7 +688,12 @@ glong gegl_buffer_signal_connect (GeglBuffer *buffer,
                                   GCallback   c_handler,
                                   gpointer    data);
 
+#ifdef HEAVY_DEBUG
+gchar* gegl_buffer_to_string(GeglBuffer* buffer);
+#endif
+
 #include <gegl-buffer-iterator.h>
+
 
 G_END_DECLS
 #endif

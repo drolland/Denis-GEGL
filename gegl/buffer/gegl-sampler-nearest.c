@@ -18,6 +18,7 @@
 #include "config.h"
 #include <math.h>
 #include <string.h>
+#include <babl/babl.h>
 
 #include "gegl.h"
 #include "gegl-types-internal.h"
@@ -131,8 +132,12 @@ gegl_sampler_get_pixel (GeglSampler    *sampler,
     }
 
   gegl_buffer_lock (sampler->buffer);
+
+/*
   if (gegl_config_threads()>1)
     g_rec_mutex_lock (&buffer->tile_storage->mutex);
+*/
+
 
   {
     gint tile_width  = buffer->tile_width;
@@ -167,8 +172,12 @@ gegl_sampler_get_pixel (GeglSampler    *sampler,
         babl_process (sampler->fish, tp, buf, 1);
       }
   }
+
+/*
   if (gegl_config_threads()>1)
     g_rec_mutex_unlock (&buffer->tile_storage->mutex);
+*/
+
   gegl_buffer_unlock (sampler->buffer);
 }
 
@@ -218,7 +227,8 @@ gegl_sampler_nearest_get (      GeglSampler*    restrict  sampler,
                           (gint) floorf ((double) absolute_x),
                           (gint) floorf ((double) absolute_y),
                           repeat_mode);
-  babl_process (sampler->fish, in_bptr, output, 1);
+    //memcpy(output,in_bptr,babl_format_get_bytes_per_pixel(sampler->format));
+    babl_process (gegl_babl_rgbA_float(), in_bptr, output, 1);
 #endif
 }
 
@@ -230,9 +240,12 @@ gegl_sampler_nearest_prepare (GeglSampler* restrict sampler)
     return;
   GEGL_SAMPLER_NEAREST (sampler)->buffer_bpp = babl_format_get_bytes_per_pixel (sampler->buffer->format);
 
-  if (gegl_config_threads () > 1)
-    sampler->get = gegl_sampler_nearest_get_threaded;
 
+  if (gegl_config_threads () > 1)
+        sampler->get = gegl_sampler_nearest_get;
+
+
+  
 #if 0 // maybe re-enable; when certain result is correct
   if (sampler->format == sampler->buffer->soft_format)
     {

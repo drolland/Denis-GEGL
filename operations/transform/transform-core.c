@@ -28,6 +28,7 @@
 
 #include "config.h"
 #include <glib/gi18n-lib.h>
+#include "gegl-heavy-debug.h"
 
 #include <math.h>
 #include <gegl.h>
@@ -1237,6 +1238,7 @@ gegl_transform_process (GeglOperation        *operation,
                         const GeglRectangle  *result,
                         gint                  level)
 {
+  H_DBG_TRACE_BGEIN()
   GeglBuffer  *input;
   GeglBuffer  *output;
   GeglMatrix3  matrix;
@@ -1252,6 +1254,7 @@ gegl_transform_process (GeglOperation        *operation,
       if (!input)
         {
           g_warning ("transform received NULL input");
+          H_DBG_TRACE_END()
           return FALSE;
         }
 
@@ -1364,6 +1367,6 @@ gegl_transform_process (GeglOperation        *operation,
       if (input != NULL)
         g_object_unref (input);
     }
-
+  H_DBG_TRACE_END()
   return TRUE;
 }
