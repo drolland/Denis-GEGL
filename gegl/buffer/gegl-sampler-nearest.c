@@ -133,10 +133,10 @@ gegl_sampler_get_pixel (GeglSampler    *sampler,
 
   gegl_buffer_lock (sampler->buffer);
 
-/*
+
   if (gegl_config_threads()>1)
     g_rec_mutex_lock (&buffer->tile_storage->mutex);
-*/
+
 
 
   {
@@ -173,10 +173,10 @@ gegl_sampler_get_pixel (GeglSampler    *sampler,
       }
   }
 
-/*
+
   if (gegl_config_threads()>1)
     g_rec_mutex_unlock (&buffer->tile_storage->mutex);
-*/
+
 
   gegl_buffer_unlock (sampler->buffer);
 }
@@ -217,7 +217,7 @@ gegl_sampler_nearest_get (      GeglSampler*    restrict  sampler,
                                 void*           restrict  output,
                                 GeglAbyssPolicy           repeat_mode)
 {
-#if 1
+#if 0
   gegl_sampler_get_pixel (sampler,
            floorf(absolute_x), floorf(absolute_y),
            output, repeat_mode);
@@ -228,7 +228,7 @@ gegl_sampler_nearest_get (      GeglSampler*    restrict  sampler,
                           (gint) floorf ((double) absolute_y),
                           repeat_mode);
     //memcpy(output,in_bptr,babl_format_get_bytes_per_pixel(sampler->format));
-    babl_process (gegl_babl_rgbA_float(), in_bptr, output, 1);
+    babl_process (sampler->fish, in_bptr, output, 1);
 #endif
 }
 
@@ -242,7 +242,7 @@ gegl_sampler_nearest_prepare (GeglSampler* restrict sampler)
 
 
   if (gegl_config_threads () > 1)
-        sampler->get = gegl_sampler_nearest_get;
+        sampler->get = gegl_sampler_nearest_get_threaded;
 
 
   
